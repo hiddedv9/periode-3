@@ -13,35 +13,34 @@ namespace opdr2
 
             Villain ozymandias = new Villain("Adrian Veidt", 60);
             Villain joker = new Villain("Mr. J", 70);
-            Person robin = new Hero("Jason Todd", joker, 30);
+            Person robin = new Hero("Jason Todd", joker,null, 30);
             Hero batman = new Hero("Bruce Wayne", joker, robin, 40);
-            batman.AddStrength("Intelligence");
-            batman.AddStrength("Wealth");
-            Person rorschach = new Hero("Walter Joseph Kovacs", ozymandias, 50);
+            batman.addStrength("Intelligence");
+            batman.addStrength("Wealth");
+            Person rorschach = new Hero("Walter Joseph Kovacs", ozymandias,null, 50);
             Villain gru = new Villain("Gru", 90);
-            Minion bob = new Minion("Bob", "Dumb");
-            Minion kevin = new Minion("Kevin", "Dumb");
+            Minion bob = new Minion("Bob","Dumb");
+            Minion kevin = new Minion("Kevin","Dumb");
             Minion stuart = new Minion("Stuart", "Dumb");
-            gru.AddMinion(bob);
-            gru.AddMinion(kevin);
-            gru.AddMinion(stuart);
+            gru.addMinion(bob);
+            gru.addMinion(kevin);
+            gru.addMinion(stuart);
 
             Console.WriteLine("BATMAN");
-            Console.WriteLine(batman.GetName());
-            foreach (string strenght in batman.GetStrengths())
+            Console.WriteLine(batman.getName());
+            foreach (string strenght in batman.getKrachten())
             {
                 Console.WriteLine(strenght);
             }
-            Console.WriteLine(batman.GetArchnemesis().GetName());
-            Console.WriteLine(batman.GetArchnemesis().GetEvilness());
+            Console.WriteLine(batman.getArchnemesis().getName());
+            Console.WriteLine(batman.getArchnemesis().getEvilness());
 
             Console.WriteLine("GRU");
-            Console.WriteLine(gru.GetName());
-            foreach (Minion minion in gru.GetMinions())
+            Console.WriteLine(gru.getName());
+            foreach (Minion minion in gru.getMinions())
             {
-                Console.WriteLine(minion.GetName());
-                Console.WriteLine(minion.GetEvilness());
-                Console.WriteLine(minion.GetWeakness());
+                Console.WriteLine(minion.getName());
+                Console.WriteLine(minion.getWeakness());
             }
             Console.ReadKey();
         }

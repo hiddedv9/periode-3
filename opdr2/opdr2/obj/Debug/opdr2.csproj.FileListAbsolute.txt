@@ -1,0 +1,7 @@
+D:\GitHub\periode-3\opdr2\opdr2\bin\Debug\opdr2.exe.config
+D:\GitHub\periode-3\opdr2\opdr2\obj\Debug\opdr2.csprojResolveAssemblyReference.cache
+D:\GitHub\periode-3\opdr2\opdr2\obj\Debug\opdr2.csproj.CoreCompileInputs.cache
+D:\GitHub\periode-3\opdr2\opdr2\bin\Debug\opdr2.exe
+D:\GitHub\periode-3\opdr2\opdr2\bin\Debug\opdr2.pdb
+D:\GitHub\periode-3\opdr2\opdr2\obj\Debug\opdr2.exe
+D:\GitHub\periode-3\opdr2\opdr2\obj\Debug\opdr2.pdb
