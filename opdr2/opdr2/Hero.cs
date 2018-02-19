@@ -27,23 +27,28 @@ namespace opdr2
             else
                  this.evilness = evilness;
         }
+
         public string getName()
         {
             return this.name;
         }
+
         public int getEvilness()
         {
             return this.evilness;
         }
+
         public void updateSidekick(Person sidekick)
         {
             this.sidekick = sidekick;
         }
 
+
         public Person getSidekick()
         {
             return this.sidekick;
         }
+
 
         public Villain getArchnemesis()
         {
