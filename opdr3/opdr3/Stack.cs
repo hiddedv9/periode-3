@@ -17,7 +17,7 @@ namespace opdr3
 
         public void Pop()
         {
-            this.stacklist.Remove();
+            
 
         }
 

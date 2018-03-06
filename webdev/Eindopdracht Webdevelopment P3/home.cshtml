@@ -1,0 +1,78 @@
+﻿@{
+    Page.Title = "Present Planner";
+    //Layout = "Your Layout Page goes here";
+
+    //Variabelen
+    var newmsgs = 5;
+}
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper red">
+            <a href="#" class="brand-logo">Present Planner</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+                <li>
+                    <a href="menu.cshtml">
+                        Dashboard
+                        @{ if (newmsgs != 0)
+                            {<span class="new badge">@newmsgs</span>}}
+                    </a>
+                </li>
+                <li><a href="register.cshtml">Registratie bruidspaar</a></li>
+                <li><a href="loginbruidspaar.cshtml">Inloggen bruidspaar</a></li>
+                <li><a href="kado.cshtml">Kado inplannen of wijzigen</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col s12" id="plaatje">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s6" id="welkomcol">
+                
+            </div>
+
+            <div class="col s6" id="newscol">
+               
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+<footer class="page-footer red">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Present Planner</h5>
+                <p class="grey-text text-lighten-4">Welkom bij Present Planner.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                    <li><a class="grey-text text-lighten-3" href="#!">Inloggen</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Registreer</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Plan Cadeau</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Menu</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            © 2018 Present Planner
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+    </div>
+</footer>
