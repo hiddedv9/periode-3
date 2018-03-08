@@ -1,0 +1,159 @@
+﻿@{
+    Page.Title = "Products";
+    Layout = "~/_SiteLayout.cshtml";
+
+    List<Product> productsByCategory = null;
+
+    Product productById = null;
+    if (IsPost && !Request.Form["Action"].IsEmpty())
+    {
+        string action = Request.Form["Action"];
+        if (action == "FindProductById"
+            && Request.Form["productId"].IsInt())
+        {
+            int prodId = Request.Form["productId"].AsInt();
+            productById = ProductRepository.SelectProductsById(prodId);
+        }
+
+        if (action == "FindProductsByCategoryId" &&
+            Request.Form["categoryId"].IsInt())
+        {
+            int categoryId = Request.Form["categoryId"].AsInt();
+            productsByCategory = ProductRepository.SelectProductsByCategoryId(categoryId);
+        }
+
+        if (action == "AddProduct" &&
+            Request.Form["categoryId"].IsInt() &&
+            !Request.Form["name"].IsEmpty() &&
+            Request.Form["price"].IsDecimal())
+        {
+            int categoryId = Request.Form["categoryId"].AsInt();
+            string name = Request.Form["name"];
+            decimal price = Request.Form["price"].AsDecimal();
+            Product p = new Product(-1, categoryId, name, price);
+            ProductRepository.Insert(p);
+        }
+
+        if (action == "DeleteProduct" &&
+            Request.Form["productId"].IsInt())
+        {
+            ProductRepository.Delete(Request.Form["productId"].AsInt());
+        }
+    }
+}
+
+<h1>Products</h1>
+<ul>
+    @foreach (Product p in ProductRepository.SelectAll())
+    {
+        <li>
+            <form method="post">
+                @p.Name
+                <input type="hidden" name="productId" value="@p.ProductId" />
+                <button name="Action" value="DeleteProduct">X</button>
+            </form>
+        </li>
+    }
+</ul>
+
+<!-- Product with Category -- Incorrect N+1 problem -->
+<div>
+    <h1>Product with Category -- Incorrect N+1 problem</h1>
+    <ul>
+        @foreach (Product p in ProductRepository.SelectAll())
+        {
+            <li>@p.Name -- @p.Category.Name</li>
+        }
+    </ul>
+    <hr />
+</div>
+
+<!-- Show Product With Category -->
+<div>
+    <h1>Products with Category -- Correct</h1>
+    <ul>
+        @foreach (Product p in ProductRepository.SelectAllWithCategory())
+        {
+            <li>@p.Name -- @p.Category.Name</li>
+        }
+    </ul>
+</div>
+<!-- Show Products by Category Correct-->
+<div>
+    <h1>Category with Products - Correct</h1>
+    <ul>
+        @foreach (Category c in CategoryRepository.SelectAllCategoriesWithProduct())
+        {
+            <li>
+                @c.Name
+                <ul>
+                        @foreach (Product p in c.Products)
+                        {
+                        <li>
+                            @p.Name
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+    <hr />
+</div>
+<!-- Show Product By Product Id-->
+<div>
+    <form method="post">
+        <input name="productId" placeholder="Vul product nummer in!" type="number" />
+        <button name="Action" value="FindProductById" type="submit">Show Product By Id</button>
+    </form>
+    @if (productById != null)
+    {
+        <ul>
+            <li>@productById.Name <span>@productById.Price</span></li>
+        </ul>
+}
+else
+{
+        <ul>
+            <li>Geen Product Voor dit ID</li>
+        </ul>
+    }
+    <hr />
+</div>
+<!-- Show Product BY Category Id-->
+<div>
+    <form method="post">
+        <input name="categoryId" type="text" placeholder="vul category id in!" />
+        <button name="Action" value="FindProductsByCategoryId">Show Category By Id</button>
+    </form>
+    <ul>
+        @if (productsByCategory == null)
+        {
+            <li>Geen Producten beschikbaar voor categoryId: @Request["categoryId"]</li>
+}
+else
+{
+    foreach (Product p in productsByCategory)
+    {
+                <li>@p.Name -- @p.Category.Name</li>
+    }
+}
+    </ul>
+    <hr />
+</div>
+
+<!-- Add Product -->
+<div>
+    <form method="post">
+        Name: <input name="name" type="text" /><br />
+        Price: <input name="price" type="number" /><br />
+        Category:
+        <select name="categoryId">
+            @foreach (Category c in CategoryRepository.SelectAll())
+            {
+                <option value="@c.CategoryId">@c.Name</option>
+            }
+        </select>
+        <br />
+        <button name="Action" value="AddProduct" type="submit">Add Product</button>
+    </form>
+</div>

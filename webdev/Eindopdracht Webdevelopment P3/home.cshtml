@@ -1,57 +1,69 @@
 ﻿@{
     Page.Title = "Present Planner";
     //Layout = "Your Layout Page goes here";
-
-    //Variabelen
     var newmsgs = 5;
+    Session["newmsgs"] = newmsgs;
+
 }
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link rel="stylesheet" href="home.css">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="~/css/home.css" />
 </head>
 <body>
+
     <nav>
-        <div class="nav-wrapper red">
-            <a href="#" class="brand-logo">Present Planner</a>
+        <div class="nav-wrapper red z-depth-5">
+            <a href="#" class="brand-logo">A Special Day</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
 
                 <li>
-                    <a href="menu.cshtml">
+                    <a href="home.cshtml">
                         Dashboard
                         @{ if (newmsgs != 0)
-                            {<span class="new badge">@newmsgs</span>}}
+                        {<span class="new badge">@newmsgs</span>}}
                     </a>
                 </li>
                 <li><a href="register.cshtml">Registratie bruidspaar</a></li>
-                <li><a href="loginbruidspaar.cshtml">Inloggen bruidspaar</a></li>
+                <li><a href="login.cshtml">Inloggen bruidspaar</a></li>
                 <li><a href="kado.cshtml">Kado inplannen of wijzigen</a></li>
             </ul>
         </div>
     </nav>
 
-    <div class="container">
-        <div class="row">
-            <div class="col s12" id="plaatje">
 
-            </div>
+    <div class="parallax-container">
+        <div class="parallax z-depth-0">
+            <img src="~/resources/pic1.jpg">
         </div>
-
-        <div class="row">
-            <div class="col s6" id="welkomcol">
-                
-            </div>
-
-            <div class="col s6" id="newscol">
-               
-            </div>
-
+    </div>
+    <div class="section red z-depth-5">
+        <div class="row container">
+            <h2 class="header white-text">Welkom</h2>
+            <p class="white-text text-darken-3 lighten-3">Weddingplanners A Special Day brengt u nu een plan-app voor uw trouwcadeau's.</p>
         </div>
-
     </div>
 
+    <div class="parallax-container">
+        <div class="parallax z-depth-0">
+            <img src="~/resources/pic2.jpeg">
+        </div>
+    </div>
+   
+
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.parallax').parallax();
+        });</script>
 </body>
 
-<footer class="page-footer red">
+<footer class="page-footer red z-depth-5">
     <div class="container">
         <div class="row">
             <div class="col l6 s12">
