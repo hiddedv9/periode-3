@@ -15,10 +15,11 @@ namespace opdr3
             stacklist[0] = item;
         }
 
-        public void Pop()
+        public T Pop()
         {
-            
+            T item;
 
+            return item;
         }
 
     }

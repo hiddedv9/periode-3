@@ -11,3 +11,4 @@ C:\Users\Hidde\Documents\GitHub\periode-3\opdr2\opdr2\obj\Debug\opdr2.pdb
 C:\Users\Hidde\Documents\GitHub\periode-3\opdr2\opdr2\bin\Debug\opdr2.exe
 C:\Users\Hidde\Documents\GitHub\periode-3\opdr2\opdr2\bin\Debug\opdr2.pdb
 C:\Users\Hidde\Documents\GitHub\periode-3\opdr2\opdr2\obj\Debug\opdr2.csprojResolveAssemblyReference.cache
+C:\Users\Hidde\Documents\GitHub\periode-3\opdr2\opdr2\obj\Debug\opdr2.csproj.CoreCompileInputs.cache

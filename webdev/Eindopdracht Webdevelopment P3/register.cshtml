@@ -2,6 +2,51 @@
     Page.Title = "Present Planner";
     //Layout = "Your Layout Page goes here";
     var newmsgs = 5;
+    AppState["newmsgs"] = newmsgs;
+    Validation.RequireField("voornaam_bruid", "De naam van de bruidegom is vereist!");
+    Validation.RequireField("voornaam_bruidegom", "De naam van de bruid is vereist!");
+    Validation.RequireField("inputemail", "Emailadres is vereist!");
+    Validation.RequireField("inputpassword", "wachtwoord is vereist!");
+    if (IsPost && Validation.IsValid())
+    {
+
+        var vrouwnaam = Request.Form["voornaam_bruid"];
+        string mannaam = Request.Form["voornaam_bruidegom"];
+        string email = Request.Form["inputemail"];
+        string passwd = Request.Form["inputpassword"];
+
+        //variabelen uit form
+
+
+
+        //GUID genereren
+        var uniquekey = Guid.NewGuid().ToString();
+
+        //password hashing
+
+        string hashedpw = Crypto.HashPassword(passwd);
+
+        //db logica
+        string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\PresentPlanner.mdf;Integrated Security=True";
+        string provider = "System.Data.SqlClient";
+        Database db = Database.OpenConnectionString(connectionString, provider);
+        var sql = "SELECT 1 FROM Bruidsparen WHERE emailadres=@0";
+        dynamic result = db.Query(sql, email);
+        if (result != null) //als email al bestaat, geef error.
+        {
+            Response.Redirect("error.cshtml");
+        }
+        else //maak een account aan.
+        {
+            sql = "INSERT INTO Bruidsparen(Mannaam,Vrouwnaam,uniquekey,emailadres,passhash) VALUES(@0,@1,@2,@3,@4)";
+
+
+
+            db.Execute(sql, mannaam, vrouwnaam, uniquekey, email, hashedpw);
+            Response.Redirect("home.cshtml");
+        }
+        db.Close();
+    }
 
 }
 <head>
@@ -11,34 +56,19 @@
 </head>
 <body>
 
-    <nav>
-        <div class="nav-wrapper red z-depth-5">
-            <a href="#" class="brand-logo">A Special Day</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
+    @RenderPage("layout/_nav.cshtml")
 
-                <li>
-                    <a href="home.cshtml">
-                        Dashboard
-                        @{ if (newmsgs != 0)
-                            {<span class="new badge">@newmsgs</span>}}
-                    </a>
-                </li>
-                <li><a href="register.cshtml">Registratie bruidspaar</a></li>
-                <li><a href="login.cshtml">Inloggen bruidspaar</a></li>
-                <li><a href="kado.cshtml">Kado inplannen of wijzigen</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <div class="row">
-        <form action="register.ashx" method="post" class="col s12">
+    <div class="container">
+        <form  method="post" class="col s12">
             <div class="row">
                 <div class="input-field col s6">
                     <input id="voornaam_bruidegom" name="voornaam_bruidegom" type="text" class="validate">
                     <label class="active" for="voornaam_bruidegom">Voornaam Bruidegom</label>
                 </div>
+                
                 <div class="input-field col s6">
-                    <input id="voornaam_bruid" naam="voornaam_bruid" type="text" class="validate">
+                    <input id="voornaam_bruid" name="voornaam_bruid" type="text" class="validate">
                     <label class="active" for="voornaam_bruid">Voornaam Bruid</label>
                 </div>
             </div>
@@ -47,70 +77,30 @@
 
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="email"naam="inputemail" type="email" class="validate">
+                    <input id="inputemail" name="inputemail" type="email" class="validate">
                     <label class="active" for="email">Email</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="password" naam="inputpassword" type="password" class="validate">
+                    <input id="inputpassword" name="inputpassword" type="password" class="validate">
                     <label class="active" for="password">Password</label>
                 </div>
             </div>
-            <div class="row">
-            <div class="input-field col s12">
-                <input id="trouwdatum" type="date" class="datepicker">
-                <label class="active" for="trouwdatum">Trouwdatum</label>
-                <script type="text/javascript">
-                    $('.datepicker').pickadate({
-                        selectMonths: true, // Creates a dropdown to control month
-                        selectYears: 15, // Creates a dropdown of 15 years to control year,
-                        today: 'Today',
-                        clear: 'Clear',
-                        close: 'Ok',
-                        closeOnSelect: false // Close upon selecting a date,
-                    });
 
-                </script>
-            </div>
-    </div>
-    <button class="btn waves-effect waves-light" type="submit" name="action">
-        Register
-        <i class="material-icons right">send</i>
-    </button>
+            <button class="btn waves-effect waves-light" type="submit" name="action">
+                Register
+                <i class="material-icons right">send</i>
+            </button>
 
-
-    </form>
+            @Html.ValidationSummary()
+        </form>
     </div>
 
 
 
 </body>
 
+@RenderPage("layout/_footer.cshtml")
 
-<footer class="page-footer red z-depth-5">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Present Planner</h5>
-                <p class="grey-text text-lighten-4">Welkom bij Present Planner.</p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-                <ul>
-                    <li><a class="grey-text text-lighten-3" href="#!">Inloggen</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Registreer</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Plan Cadeau</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Menu</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="footer-copyright">
-        <div class="container">
-            © 2018 A Perfect Day
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-        </div>
-    </div>
-</footer>
 

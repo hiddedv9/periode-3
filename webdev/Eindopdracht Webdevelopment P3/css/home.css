@@ -1,6 +1,6 @@
 ﻿body {
     display: flex;
-    min-height: 1000px;
+    min-height: 100vh;
     flex-direction: column;
 }
 
@@ -8,3 +8,7 @@ main {
     flex: 1 0 auto;
 }
 
+#wrapper{
+    min-height:75%;
+    background-image: url("resources/pic1.jpg");
+}

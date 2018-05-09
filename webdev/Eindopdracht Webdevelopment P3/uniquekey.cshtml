@@ -1,0 +1,38 @@
+﻿@{
+    Page.Title = "Title goes here";
+    //Layout = "Your Layout Page goes here";
+}
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="~/css/home.css" />
+</head>
+<body>
+
+    @RenderPage("layout/_nav.cshtml")
+
+    <div class="row">
+        <form method="post" action="./uniquekey.ashx" class="col l12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input name="inputuniquekey" id="inputuniquekey" type="text" class="validate">
+                    <label class="active" for="inputuniquekey">Unieke code:</label>
+                </div>
+            </div>
+
+            <button class="btn waves-effect waves-light" type="submit" name="action">
+                Log in
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+    </div>
+
+
+
+    @RenderPage("layout/_footer.cshtml")
+</body>
+
+

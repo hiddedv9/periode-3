@@ -1,0 +1,289 @@
+﻿@{
+
+    Page.Title = "Title goes here";
+    //Layout = "Your Layout Page goes here";
+    string mode = Session["Mode"].ToString();
+    string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\PresentPlanner.mdf;Integrated Security=True";
+    string provider = "System.Data.SqlClient";
+    string sql;
+    Database db = Database.OpenConnectionString(connectionString, provider);
+
+
+
+}
+
+@{ //logica voor toevoegen kado aan database door ingelogd bruidspaar
+
+
+    if (IsPost)
+    {
+        if (mode == "Bruidspaar")
+        {
+            string uniquekey = Session["Uniquekey"].ToString();
+
+            var omschrijving = Request.Form["kadoomschrijving"];
+            var kadonaam = Request.Form["kadonaam"];
+            var prioriteit = Request.Form["kadoprio"];
+
+
+
+            if (omschrijving != null && kadonaam != null)
+            {
+                sql = "SELECT * FROM Kados WHERE Kadonaam=@0 AND Uniquekey=@1";
+                dynamic result = db.Query(sql, kadonaam, uniquekey);
+                if (result.Count == 0)
+                {
+
+                    sql = "INSERT INTO Kados(Uniquekey,Omschrijving,Kadonaam,IsGekocht,Prioriteit) VALUES(@0,@1,@2,@3,@4)";
+                    result = db.Execute(sql, uniquekey, omschrijving, kadonaam, "nee", prioriteit);
+                }
+                else
+                {
+                    Response.Redirect("error.cshtml");
+                }
+
+            }
+            else if (Request.Form["deleteid"] != null)
+            {
+                sql = "DELETE FROM Kados WHERE Id=@0";
+                db.Execute(sql, Request.Form["deleteid"]);
+            }
+            else if(Request.Form["updateprioid"] != null && Request.Form["updateprio"] != null)
+            {
+                int id = Convert.ToInt32(Request.Form["updateprioid"]);
+                int prio = Convert.ToInt32(Request.Form["updateprio"]);
+
+                sql = "UPDATE Kados SET Prioriteit=@0 WHERE Id=@1";
+                db.Execute(sql,prio,id);
+            }
+
+
+
+
+
+            Response.Redirect("kadolijst.cshtml");
+        }
+
+        else if (mode == "Gast")
+        {
+            var id = Request.Form["gekochtid"];
+            sql = "UPDATE Kados SET IsGekocht='Ja' WHERE Id=@0";
+            db.Execute(sql, id);
+            Response.Redirect("kadolijst.cshtml");
+
+        }
+        db.Close();
+    }
+}
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="~/css/home.css" />
+</head>
+<body>
+    @RenderPage("layout/_nav.cshtml")
+
+    <div class="container">
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>Kadonummer</th>
+                    <th>Kadonaam</th>
+                    <th>Prioriteit</th>
+                    <th>Omschrijving</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{
+                    if (mode == "Bruidspaar")
+                    {
+                        string uniquekey = Session["Uniquekey"].ToString();
+                        sql = "SELECT * FROM Kados WHERE Uniquekey =@0";
+                        dynamic kadoresults = db.Query(sql, uniquekey);
+                        db.Close();
+                        if (kadoresults != null)
+                        {
+
+                            
+
+                            foreach (var row in kadoresults)
+                            {
+                                <tr>
+                                    <td>@row.Id</td>
+                                    <td>@row.Kadonaam</td>
+                                    <td>@row.Prioriteit</td>
+                                    <td>@row.Omschrijving</td>
+
+                                </tr>
+
+
+                            }
+                        }
+                    }
+                    else if (mode == "Gast")
+                    {
+                        sql = "SELECT Omschrijving,Kadonaam,Prioriteit,Id FROM Kados WHERE Uniquekey=@0 AND IsGekocht=@1 ORDER BY Prioriteit ASC";
+                        string uniquekey = Session["uniquekey"].ToString();
+                        
+                        dynamic kadoresults = db.Query(sql, uniquekey.ToString(), "nee");
+                        if (kadoresults != null)
+                        {
+
+
+                            foreach (var row in kadoresults)
+                            {
+                                <tr>
+                                    <td>@row.Id</td>
+                                    <td>@row.Kadonaam</td>
+                                    <td>@row.Prioriteit</td>
+                                    <td>@row.Omschrijving</td>
+
+                                </tr>
+
+                            }
+
+
+                        }
+
+
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+    <div class="container">
+        @{ if (mode == "Bruidspaar")
+            {
+                <p> Welkom @Session["Mannaam"].ToString() en / of @Session["Vrouwnaam"].ToString(), voeg hieronder een cadeauwens toe.</p>
+                <p>Stuur de code @Session["Uniquekey"] naar uw gasten zodat zij uw lijst kunnen zien!</p>
+            }
+            else if (mode == "Gast")
+            {
+                <p> Welkom gast! Hierboven kun je de lijst met wensen van het bruidspaar zien. In het veld hieronder kun je het ID nummer invullen van de wens die je vervuld hebt zodat andere gasten niet hetzelfde gaan kopen.</p>
+            }
+        }
+
+        @{ if (mode == "Bruidspaar")
+            {
+
+
+
+
+                <div class="row">
+                    <form class="col s12" method="post">
+                        <div class="row">
+                            <div class="input-field col l6">
+
+
+                                <input id="kadoprio" name="kadoprio" type="text" class="validate">
+                                <label class="active" for="kadoprio">Prioriteit van het kado</label>
+
+                            </div>
+                            <div class="input-field col l6">
+                                <input id="kadonaam" name="kadonaam" type="text" class="validate">
+                                <label class="active" for="kadonaam">Naam van het kado</label>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="input-field col l12">
+                                <textarea id="kadoomschrijving" name="kadoomschrijving" class="materialize-textarea"></textarea>
+                                <label class="active" for="kadoomschrijving">Kado omschrijving.</label>
+                            </div>
+                        </div>
+
+                        <button class="btn waves-effect waves-light" type="submit" name="action">
+                            Submit
+                            <i class="material-icons right">send</i>
+                        </button>
+
+                    </form>
+                    <div class="col l12">
+                        <form method="post">
+                            <div class="row">
+                                <div class="input-field col l12">
+                                    <input id="deleteid" name="deleteid" type="text" class="validate">
+                                    <label class="active" for="deleteid">Voer kadonummer van te deleten kado in</label>
+
+
+
+                                </div>
+                            </div>
+                            <button class="btn waves-effect waves-light" type="submit" name="action">
+                                Delete
+                                <i class="material-icons right">delete</i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="col l12">
+                        <form method="post">
+                            <div class="row">
+                                <div class="input-field col l12">
+                                    <input id="updateprioid" name="updateprioid" type="text" class="validate">
+                                    <label class="active" for="deleteid">Voer kadonummer van te updaten kado in.</label>
+
+
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col l12">
+                                    <input id="updateprio" name="updateprio" type="text" class="validate">
+                                    <label class="active" for="deleteid">Voer de nieuwe prioriteit in.</label>
+
+
+
+                                </div>
+                            </div>
+                            <button class="btn waves-effect waves-light" type="submit" name="action">
+                                Delete
+                                <i class="material-icons right">delete</i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+
+            }
+            else if (mode == "Gast")
+            {
+                <div class="col l12">
+                    <form method="post">
+                        <div class="row">
+                            <div class="input-field col l12">
+                                <input id="gekochtid" name="gekochtid" type="text" class="validate">
+                                <label class="active" for="gekochtid">Voer kadonummer van het cadeau in dat u heeft gekocht.</label>
+
+
+
+                            </div>
+                        </div>
+                        <button class="btn waves-effect waves-light" type="submit" name="action">
+                            Markeer als gekocht.
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </form>
+                </div>
+
+            }
+        }
+
+    </div>
+
+
+    @RenderPage("layout/_footer.cshtml")
+</body>
+
+
+

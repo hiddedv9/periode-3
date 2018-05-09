@@ -1,0 +1,35 @@
+﻿@{
+    Page.Title = "Present Planner";
+    //Layout = "Your Layout Page goes here";
+    var newmsgs = 5;
+
+    Session["newmsgs"] = newmsgs;
+
+
+
+
+
+
+
+
+
+}
+
+<nav>
+    <div class="nav-wrapper red z-depth-5">
+        <a href="#" class="brand-logo">A Special Day</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+            <li>
+                <a href="home.cshtml">
+                    Dashboard
+                    @{ if (newmsgs != 0)
+                        {<span class="new badge">@newmsgs</span>}}
+                </a>
+            </li>
+            <li><a href="register.cshtml">Registratie bruidspaar</a></li>
+            <li><a href="login.cshtml">Inloggen bruidspaar</a></li>
+            <li><a href="~/uniquekey.cshtml">Kado inplannen met unieke code</a></li>
+        </ul>
+    </div>
+</nav>
