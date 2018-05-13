@@ -8,19 +8,20 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Eindopdracht_Gevorderd_Programmeren
 {
-    class ListStack<T> : Stack<T>
+    class ListStack : Stack
     {
-        List<T> list = new List<T>();
+        List<int> list = new List<int>();
 
-
-        public override void Push(T item)
+        public  override void Push(int item)
         {
             list.Add(item);
         }
 
-        public override T Pop()
+        
+
+        public override int Pop()
         {
-            T item = list[list.Count-1];
+            int item = list[list.Count-1];
             list.Remove(item);
             return item;
         }

@@ -45,7 +45,7 @@
             // stacklistbox
             // 
             this.stacklistbox.FormattingEnabled = true;
-            this.stacklistbox.Location = new System.Drawing.Point(361, 49);
+            this.stacklistbox.Location = new System.Drawing.Point(614, 49);
             this.stacklistbox.Name = "stacklistbox";
             this.stacklistbox.Size = new System.Drawing.Size(120, 342);
             this.stacklistbox.TabIndex = 1;
@@ -65,7 +65,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(493, 436);
+            this.ClientSize = new System.Drawing.Size(746, 504);
             this.Controls.Add(this.keyholder);
             this.Controls.Add(this.stacklistbox);
             this.Controls.Add(this.berekeningbox);

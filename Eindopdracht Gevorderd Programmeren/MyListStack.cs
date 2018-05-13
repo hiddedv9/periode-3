@@ -8,27 +8,30 @@ using System.Windows.Forms.VisualStyles;
 
 namespace Eindopdracht_Gevorderd_Programmeren
 {
-    class MyListStack<T> : Stack<T>
+    class MyListStack : Stack
     {
-        private MyList<T> list;
+        private MyList<int> list;
         
-        public override T Pop()
+        public override int Pop()
         {
             if (list.GetNext() == null)
             {
-                return list.GetItem();
+                return Convert.ToInt32(list.GetItem());
                 
             }
             else
             {
-                return list.GetNext().GetItem();
+                return Convert.ToInt32(list.GetNext().GetItem());
             }
 
         }
 
-        public override void Push(T item)
+        public override void Push(int item)
         {
-            if(list.GetNext() == null) { }
+            if (list.GetNext() == null)
+            {
+                list.next = new MyList<int>(item);
+            }
         }
     }
 }

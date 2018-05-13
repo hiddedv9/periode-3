@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Eindopdracht_Gevorderd_Programmeren
 {
-   public abstract class Stack<T>
+    public abstract class Stack
     {
-       public abstract  void Push(T item);
-       public abstract  T Pop();
+        //virtual method zodat we hem aan kunnen passen voor gebruik met generic in myliststack
+        public abstract void Push(int item);
        
-        
+        public abstract int Pop();
+
+
     }
 }

@@ -9,7 +9,7 @@ namespace Eindopdracht_Gevorderd_Programmeren
     class MyList<T>
     {
        private readonly T item;
-       private MyList<T> next;
+      public MyList<T> next;
 
         public MyList(T i)
         {
