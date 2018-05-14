@@ -12,12 +12,16 @@ namespace Eindopdracht_Gevorderd_Programmeren
 {
     public partial class Form1 : Form
     {
+        MyListStack myliststack = new MyListStack();
+        ArrayStack arraystack = new ArrayStack();
+        ListStack liststack = new ListStack();
+        private string mode = "ListStack";
         public Form1()
         {
             InitializeComponent();
             int counter = 0;
             int tag = 1;
-
+           
 
             for (counter = 0; counter < 4; counter++)
             {
@@ -120,49 +124,52 @@ namespace Eindopdracht_Gevorderd_Programmeren
                         berekeningbox.Text += "1";
                         break;
                     case 2:
-                      
+                        berekeningbox.Text +=  "4";
                         break;
                     case 3:
-                       
+                        berekeningbox.Text += "7";
                         break;
                     case 4:
-                        
+                        mode = "ArrayStack";
+                        stacklabel.Text = mode;
                         break;
                     case 5:
-                      
+                        berekeningbox.Text += "2";
                         break;
                     case 6:
-                    
+                        berekeningbox.Text += "5";
                         break;
                     case 7:
-                      
+                        berekeningbox.Text += "8";
                         break;
                     case 8:
-                        
+                        mode = "ListStack";
+                        stacklabel.Text = mode;
                         break;
                     case 9:
-                     
+                        berekeningbox.Text += "3";
                         break;
                     case 10:
-                     
+                        berekeningbox.Text += "6";
                         break;
                     case 11:
-                    
+                        berekeningbox.Text += "9";
                         break;
                     case 12:
-                     
+                        mode = "MyListStack";
+                        stacklabel.Text = mode;
                         break;
                     case 13:
-                  
+                        berekeningbox.Text += "+";
                         break;
                     case 14:
-                  
+                        berekeningbox.Text += "-";
                         break;
                     case 15:
-                     
+                        berekeningbox.Text += "/";
                         break;
                     case 16:
-                  
+                        berekeningbox.Text += "x";
                         break;
                 }
             }
@@ -170,7 +177,7 @@ namespace Eindopdracht_Gevorderd_Programmeren
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            stacklabel.Text = mode;
         }
     }
 }

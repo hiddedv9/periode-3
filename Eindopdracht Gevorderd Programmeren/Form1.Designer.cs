@@ -31,6 +31,7 @@
             this.berekeningbox = new System.Windows.Forms.RichTextBox();
             this.stacklistbox = new System.Windows.Forms.ListBox();
             this.keyholder = new System.Windows.Forms.Panel();
+            this.stacklabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // berekeningbox
@@ -59,6 +60,14 @@
             this.keyholder.Size = new System.Drawing.Size(235, 294);
             this.keyholder.TabIndex = 2;
             // 
+            // stacklabel
+            // 
+            this.stacklabel.AutoSize = true;
+            this.stacklabel.Location = new System.Drawing.Point(662, 426);
+            this.stacklabel.Name = "stacklabel";
+            this.stacklabel.Size = new System.Drawing.Size(0, 13);
+            this.stacklabel.TabIndex = 3;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -66,6 +75,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(746, 504);
+            this.Controls.Add(this.stacklabel);
             this.Controls.Add(this.keyholder);
             this.Controls.Add(this.stacklistbox);
             this.Controls.Add(this.berekeningbox);
@@ -82,6 +92,7 @@
         private System.Windows.Forms.RichTextBox berekeningbox;
         private System.Windows.Forms.ListBox stacklistbox;
         private System.Windows.Forms.Panel keyholder;
+        private System.Windows.Forms.Label stacklabel;
     }
 }
 

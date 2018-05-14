@@ -8,14 +8,10 @@ namespace Eindopdracht_Gevorderd_Programmeren
 {
     class MyList<T>
     {
-       private readonly T item;
+      private  T item;
       public MyList<T> next;
 
-        public MyList(T i)
-        {
-            this.item = i;
-            next = null;
-        }
+       
 
         
         
@@ -29,7 +25,8 @@ namespace Eindopdracht_Gevorderd_Programmeren
         {
             if(next == null)
             {
-                next = new MyList<T>(i);
+                next = new MyList<T>();
+                next.item = i;
             } else
             {
                 next.Add(i);

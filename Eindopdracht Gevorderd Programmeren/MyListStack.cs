@@ -10,7 +10,7 @@ namespace Eindopdracht_Gevorderd_Programmeren
 {
     class MyListStack : Stack
     {
-        private MyList<int> list;
+        private MyList<int> list = new MyList<int>();
         
         public override int Pop()
         {
@@ -30,7 +30,8 @@ namespace Eindopdracht_Gevorderd_Programmeren
         {
             if (list.GetNext() == null)
             {
-                list.next = new MyList<int>(item);
+                list.next = new MyList<int>();
+                list.Add(item);
             }
         }
     }
